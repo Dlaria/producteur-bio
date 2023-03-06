@@ -1,26 +1,18 @@
 <?php
-    class DB{
-        
-        private $host = 'localhost';
-        private $username = 'root';
-        private $password = 'root';
-        private $database = 'prodbio';
-        public $db;
+   // Configuration de la connexion
+define('DB_HOST','localhost');
+define('DB_USER','root');
+define('DB_PASS','root');
+define('DB_NAME','prodbio');
 
-        public function __construct($host= null, $username= null, $password = null, $database= null){
-            if($host = null){
-                $this->host = $host;
-                $this->username = $username;
-                $this->password = $password;
-                $this->database = $database;
-            }
-
-            try{
-                $this-> db = new PDO('mysql;host='.$this->host.';dbname='.$this->database,$this->username,$this->password,
-                array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'));
-            }catch(PDOException $e){
-                die('<h1>impossible de se connecter a la base de donnee</h1>');
-            }
-        }
-    }
-    ?>
+try
+{
+    // Connexion � la base
+    $dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASS);
+}
+catch (PDOException $e)
+{
+	// Echec de la connexion
+    exit("Error: " . $e->getMessage());
+}
+?>
