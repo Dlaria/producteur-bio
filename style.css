@@ -1,0 +1,61 @@
+body{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+
+.conteneur-logo,.conteneur-titre,.conteneur-valider{
+text-align:center;
+margin-bottom:52px;
+font-family: 'Amatic SC';
+}
+/* Style des boutons */
+.btnOrange{
+    width:239px;
+    height:54px;
+    background: #F17F29;
+    box-shadow: 6px 6px 40px rgba(0, 0, 0, 0.25);
+    font-family: 'Amatic SC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 29px;
+    border:none;
+    cursor:pointer;
+}
+.conteneur-inline{
+    width:80%;
+}
+.div-inline{
+    width:49%;
+    display:inline-block;
+}
+label{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+}
+.label-grand{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 55px;
+}
+.label-petit{
+    font-size: 15px;
+    line-height: 24px;
+}
+.input-form{
+    width:90%;
+    height:35px;
+    border:none;
+    background: #D9D9D9;
+    border-radius: 65px;
+}
+.cgu-cgv{
+    margin-top:30px;
+}
+.conteneur-valider{
+    margin-top:100px;
+}
