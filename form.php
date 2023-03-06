@@ -58,7 +58,7 @@ if(TRUE === isset($_POST['submit'])){
     <script src="script.js" type="text/javasccript"></script>
     <title>Mon producteur bio | formulaire de précommande</title>
 </head>
-<body>
+<body style="margin:55px 105px;">
     <div class="conteneur-logo">
     <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
     </div>
