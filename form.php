@@ -55,20 +55,34 @@ if(TRUE === isset($_POST['submit'])){
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://localhost/producteur-bio/style.css">
-    <script src="script.js" type="text/javasccript"></script>
+    <script src="script.js"></script>
     <title>Mon producteur bio | formulaire de précommande</title>
 </head>
 <body style="margin:55px 105px;">
     <div class="conteneur-logo">
-    <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
+        <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
     </div>
     <div class="conteneur-titre">
-    <h1 class="titre">Formulaire de précommande</h1>
+        <h1 class="titre">Formulaire de précommande</h1>
     </div>
     
     <input type="button" name="retour" class="btnOrange" value="Continuer mes achats">
     <h2 class="label-grand">Récapitulatif du panier</h2>
     <!-- Panier -->
+    <div class="panier">
+        <table>
+            <tr>
+                <th>Produits</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+            </tr>
+        </table>
+        <div class="footer-table">
+            <p class="div-inline">Frais de port</p>
+            <span class="div-inline">4€</span>
+            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><!--Insertion du prix --></span></p>
+        </div>
+    </div>
     <!-- Début du formulaire -->
     <form action="form.php" method="post">
         <!-- Nom et prénom sont sur la même ligne -->
@@ -144,8 +158,21 @@ if(TRUE === isset($_POST['submit'])){
             </div>
             <p style="font-family: 'Montserrat';">*= Mention obligatiore</p>
             <div class="conteneur-valider">
-                <input class="btnOrange" type="submit" name="submit" value="Valider">
+                <input class="btnOrange" type="submit" name="submit" onclick="popup()" value="Valider">
             </div>
-    </form>
+        </form>
+        <div class="popup" id="popup">
+            <div class="popup-back"></div>
+            <div class="popup-container">
+                <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
+                <h2>Merci de votre commande !</h2>
+                <p>Nous vous remercions de votre commande ! <br>
+                Vous serez tenu au courant de l'état d'avancement de votre commande et de sa livraison. <br>
+                En attendant n'oubliez pas !</p>
+                <h3>Pas besoin d'aller loin pour manger bien !</h3>
+                <br>
+                <input type="button" class="btnOrange" onclick="document.location.href='index.php';" value="Retour au site"></input>
+            </div>
+        </div>
 </body>
 </html>
