@@ -1,6 +1,17 @@
 <?php
 require 'db.class.php';
 $DB = new DB();
+$panier = new panier($DB);
+if(isset($_GET['id'])){
+    $produit =$DB->query('SELECT id FROM produit WHERE id=:id', array('id'=> $_GET['id']));
+    if(empty($produit)){
+        die("essaye pas de me hack");
+    }
+    $panier ->add($produit[0]->id);
+}
+if(isset($_GET['del'])){
+    $panier->del($_GET['del']);
+}
 // Configuration de la connexion
 define('DB_HOST','localhost');
 define('DB_USER','root');
@@ -94,10 +105,31 @@ if(TRUE === isset($_POST['submit'])){
                 <th>Prix</th>
             </tr>
         </table>
+        <?php
+                    $ids=array_keys($_SESSION['panier']);
+                    if(empty($ids)){
+                        $produits = array();
+                    }else{
+                    $produits =$DB->query('SELECT * FROM produit WHERE  id IN('.implode(',',$ids).')');
+                    }
+                    foreach ($produits as $produit):
+                         
+ 
+                     ?>
+                    <div class="row">
+                        <img src="<?php echo $produit->SrcImage; ?>" alt="">
+                        <?php echo $produit->Nom; ?>
+                        <span class="name"></span>
+                        <span class="quantité"><?php echo $_SESSION['panier'][$produit->id];?></spam>
+                        <span class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></span>
+                        <a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a>
+                    </div>
+                <?php endforeach; ?>
+
         <div class="footer-table">
             <p class="div-inline">Frais de port</p>
             <span class="div-inline">4€</span>
-            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><!--Insertion du prix --></span></p>
+            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total());?>€</span></p>
         </div>
     </div>
     <!-- Début du formulaire -->

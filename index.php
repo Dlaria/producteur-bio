@@ -52,11 +52,13 @@
                             <img src="<?php echo $produit->SrcImage; ?>" alt="">
                         </a>
                         <div class="description">
+                            
                             <?php echo $produit->Nom; ?>
-                            <a href="#" class="price"> <?php echo number_format($produit->Prix,2,',',''); ?> </a>
+                            <?php echo $produit->Origine; ?>
+                            <a href="#" class="price"><?php echo number_format($produit->Prix,2,',',''); ?> </a>
                         </div>
-                        
-                        
+                        <a class="add" href="form.php?id=<?php echo $produit->id; ?>">
+                        add</a>
                 </div>
             <?php endforeach ?>
         </div>
