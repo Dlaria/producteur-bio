@@ -1,5 +1,22 @@
 <?php
-include("db.class.php");
+require 'db.class.php';
+$DB = new DB();
+// Configuration de la connexion
+define('DB_HOST','localhost');
+define('DB_USER','root');
+define('DB_PASS','');
+define('DB_NAME','prodbio');
+
+try
+{
+    // Connexion � la base
+    $dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASS);
+}
+catch (PDOException $e)
+{
+	// Echec de la connexion
+    exit("Error: " . $e->getMessage());
+}
 
 if(TRUE === isset($_POST['submit'])){
     // Identification de TOUT les éléments
@@ -59,15 +76,14 @@ if(TRUE === isset($_POST['submit'])){
     <title>Mon producteur bio | formulaire de précommande</title>
 </head>
 <body style="margin:55px 105px;">
-    <div class="conteneur-logo">
-    <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
-    </div>
-    <div class="conteneur-titre">
-    <h1 class="titre">Formulaire de précommande</h1>
-    </div>
-    
-    <input type="button" name="retour" class="btnOrange" value="Continuer mes achats">
-    <h2 class="label-grand">Récapitulatif du panier</h2>
+
+
+        <?php
+            $req_ids=array_keys($_SESSION['panier']);
+            $produits =$DB->query('SELECT * FROM produits WHERE  id IN('.implode(',',$ids).')');
+            foreach ($produits as $produit):
+        ?>
+                    
     <!-- Panier -->
     <!-- Début du formulaire -->
     <form action="form.php" method="post">
