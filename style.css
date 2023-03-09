@@ -30,10 +30,45 @@ font-family: 'Amatic SC';
     border:none;
     cursor:pointer;
 }
-
-.conteneur-inline{
-    width:80%;
+/* Panier */
+.panier{
+    border:1px solid black;
+    width: 90%;
+    height:455px;
 }
+.panier table th{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 55px;
+}
+.panier .footer-table{
+    width: 90%;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 55px;
+}
+.panier .footer-table p.div-inline{
+    position:relative;
+    top:270px;
+    left:0px;
+}
+.panier .footer-table span.div-inline{
+    position:relative;
+    top:270px;
+    left:500px;
+}
+.panier .footer-table p{
+    position:relative;
+    top:220px;
+    left:803px;
+}
+
+/* Formulaire */
+.conteneur-inline{width:80%;}
 
 .div-inline{
     width:49%;
@@ -67,10 +102,53 @@ label{
     border-radius: 65px;
 }
 
-.cgu-cgv{
-    margin-top:30px;
-}
+.cgu-cgv{margin-top:30px;}
 
-.conteneur-valider{
-    margin-top:100px;
-}
+.conteneur-valider{margin-top:100px;}
+
+/*  POPUP   */
+.popup {
+    display: none;
+  }
+  .popup-back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba( 0, 0, 0, .25 )
+  }
+  .popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 25px;
+    background: white;
+    transform: translate(-50%, -50%);
+    text-align:center;
+    width:60%;
+  }
+  .popup-container h2{
+    font-family: 'Amatic SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 90px;
+  }
+  .popup-container h3{
+    font-family: 'Amatic SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 46px;
+    line-height: 80px;
+    margin-bottom:15px;
+  }
+  .popup-container p{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    text-align: start;
+    margin:0;
+  }
