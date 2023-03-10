@@ -64,6 +64,9 @@ class panier{
         foreach( $produits as $produit){
             $total += $produit->Prix * $_SESSION['panier'][$produit->id];
         }
+        if ($total<40){
+            $total = $total + 4;
+        }
         return $total;
     }
     public function add($produit_id){

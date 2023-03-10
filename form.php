@@ -129,7 +129,7 @@ if(TRUE === isset($_POST['submit'])){
         <div class="footer-table">
             <p class="div-inline">Frais de port</p>
             <span class="div-inline">4€</span>
-            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total());?>€</span></p>
+            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total(),2,',','');?>€</span></p>
         </div>
     </div>
     <!-- Début du formulaire -->
