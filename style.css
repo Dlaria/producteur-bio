@@ -16,6 +16,90 @@ font-family: 'Amatic SC';
     font-size: 76px;
     line-height: 96px;
 }
+.titre-index{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 96px;
+}
+.annonce{
+    width:100%;
+}
+
+.présentation h2{
+    font-family: 'Amatic SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 90px;
+    text-align:center;
+
+}
+.présentation p{
+    display: inline-block;
+    width:45%;
+    position:relative;
+    bottom: 100px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 35px;
+    text-align: justify;
+    margin:25px;
+}
+.présentation .imgPrésentation{
+    width:45%;
+    margin:25px;
+}
+.présentation .feuilles{
+    position: absolute;
+    width: 185px;
+    height: 140px;
+    left: 510px;
+    top: 1040px;
+
+    background: url(./images_site/feuilles.png) no-repeat;
+    background-size:cover;
+    transform: matrix(-0.74, 0.67, 0.67, 0.74, 0, 0);
+}
+.présentation-produit h2{
+    font-family: 'Amatic SC';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 90px;
+    text-align:center;
+}
+.présentation-produit p{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 35px;
+    text-align: justify;
+}
+div.produit{
+    display:inline-block;
+    width:17%;
+    text-align: center;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+}
+.produit img{
+    width:70%;
+}
+.produit .nom-produit{
+    font-family: 'Amatic SC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 53px;
+    margin:auto;
+}
+
 
 /* Style des boutons */
 .btnOrange{
@@ -168,4 +252,35 @@ label{
     line-height: 24px;
     text-align: start;
     margin:0;
+  }
+
+  /* Footer */
+  footer{
+    display:flex;
+    border-top: 5px solid #739E2C;
+    margin-top: 20px;
+    vertical-align: middle;
+  }
+  footer div.logo img{
+    position:relative;
+    top:80px;
+  }
+  footer>div{
+    margin:0 20px;
+  }
+  footer div h3{
+    font-family: 'Montserrat';
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  footer div p{
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  footer div.reseaux img {
+    margin:0 10px;
   }
