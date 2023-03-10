@@ -69,6 +69,8 @@ if(TRUE === isset($_POST['submit'])){
             $query->bindParam(':ville_fact',$ville_fact,PDO::PARAM_STR);
         }
         $query->execute();
+
+        header('location:index.php');
 }
 ?>
 
@@ -104,26 +106,24 @@ if(TRUE === isset($_POST['submit'])){
                 <th>Prix</th>
             </tr>
         
-                    <?php
-                    $ids=array_keys($_SESSION['panier']);
-                    if(empty($ids)){
-                        $produits = array();
-                    }else{
-                    $produits =$DB->query('SELECT * FROM produit WHERE  id IN('.implode(',',$ids).')');
-                    }
-                    foreach ($produits as $produit):
-                         
- 
-                     ?>
-                    <tr class="row">
-                        <td style="text-align:left;line-height:initial;">
-                        <img src="<?php echo $produit->SrcImage; ?>" alt="<?php echo $produit->Nom; ?>">
-                        <p><?php echo $produit->Nom; ?></p></td>
-                        <td class="quantité"><?php echo $_SESSION['panier'][$produit->id];?></td>
-                        <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
-                        <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a></td>
-                    </tr>
-                <?php endforeach; ?>
+            <?php
+            $ids=array_keys($_SESSION['panier']);
+            if(empty($ids)){
+                $produits = array();
+            }else{
+            $produits =$DB->query('SELECT * FROM produit WHERE  id IN('.implode(',',$ids).')');
+            }
+            foreach ($produits as $produit):
+                ?>
+            <tr class="row">
+                <td style="text-align:left;line-height:initial;">
+                <img src="<?php echo $produit->SrcImage; ?>" alt="<?php echo $produit->Nom; ?>">
+                <p><?php echo $produit->Nom; ?></p></td>
+                <td class="quantité"><?php echo $_SESSION['panier'][$produit->id];?></td>
+                <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
+                <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a></td>
+            </tr>
+            <?php endforeach; ?>
         </table>
         <div class="footer-table">
             <p class="div-inline">Frais de port</p>
@@ -132,7 +132,7 @@ if(TRUE === isset($_POST['submit'])){
         </div>
     </div>
     <!-- Début du formulaire -->
-    <form action="form.php" method="post" onsubmit="document.location.href='index.php';">
+    <form action="form.php" method="post">
         <!-- Nom et prénom sont sur la même ligne -->
         <div class="conteneur-inline">
             <div class="div-inline">
@@ -224,5 +224,4 @@ if(TRUE === isset($_POST['submit'])){
             </div>
     </form>
 </body>
-<?php //var_dump($_SESSION);?>
 </html>
