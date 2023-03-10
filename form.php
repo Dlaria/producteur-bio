@@ -72,7 +72,6 @@ if(TRUE === isset($_POST['submit'])){
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -94,7 +93,7 @@ if(TRUE === isset($_POST['submit'])){
     <h1 class="titre">Formulaire de précommande</h1>
     </div>
     
-    <input type="button" name="retour" class="btnOrange" value="Continuer mes achats">
+    <input type="button" name="retour" class="btnOrange" onclick="document.location.href='index.php';" value="Continuer mes achats">
     <h2 class="label-grand">Récapitulatif du panier</h2>
     <!-- Panier -->
     <div class="panier">
@@ -104,8 +103,8 @@ if(TRUE === isset($_POST['submit'])){
                 <th>Quantité</th>
                 <th>Prix</th>
             </tr>
-        </table>
-        <?php
+        
+                    <?php
                     $ids=array_keys($_SESSION['panier']);
                     if(empty($ids)){
                         $produits = array();
@@ -116,24 +115,24 @@ if(TRUE === isset($_POST['submit'])){
                          
  
                      ?>
-                    <div class="row">
-                        <img src="<?php echo $produit->SrcImage; ?>" alt="">
-                        <?php echo $produit->Nom; ?>
-                        <span class="name"></span>
-                        <span class="quantité"><?php echo $_SESSION['panier'][$produit->id];?></spam>
-                        <span class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></span>
-                        <a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a>
-                    </div>
+                    <tr class="row">
+                        <td style="text-align:left;line-height:initial;">
+                        <img src="<?php echo $produit->SrcImage; ?>" alt="<?php echo $produit->Nom; ?>">
+                        <p><?php echo $produit->Nom; ?></p></td>
+                        <td class="quantité"><?php echo $_SESSION['panier'][$produit->id];?></td>
+                        <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
+                        <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a></td>
+                    </tr>
                 <?php endforeach; ?>
-
+        </table>
         <div class="footer-table">
             <p class="div-inline">Frais de port</p>
             <span class="div-inline">4€</span>
-            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total());?>€</span></p>
+            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total(),2,',','');?>€</span></p>
         </div>
     </div>
     <!-- Début du formulaire -->
-    <form action="form.php" method="post">
+    <form action="form.php" method="post" onsubmit="document.location.href='index.php';">
         <!-- Nom et prénom sont sur la même ligne -->
         <div class="conteneur-inline">
             <div class="div-inline">
@@ -145,11 +144,11 @@ if(TRUE === isset($_POST['submit'])){
                     <input class="input-form" type="text" name="prenom" required>
 				</div>
         </div>
-            <div class="">
+            <div>
                 <label class="label-grand">Adresse mail *</label><br>
                 <input class="input-form" type="text" name="mail" required>
             </div>
-            <div class="">
+            <div>
                 <h3 class="label-grand">Adresse de livraison *</h3>
 
                 <input class="input-form" type="text" name="num_et_rue" required><br>
@@ -164,11 +163,11 @@ if(TRUE === isset($_POST['submit'])){
                 <input class="input-form" type="text" name="ville" required><br>
                 <label class="label-petit">Ville</label><br>
             </div>
-            <div class="">
+            <div>
                 <label class="label-grand">Numéro de téléphone *</label><br>
                 <input class="input-form" type="text" name="numero_tel" required>
             </div>
-            <div class="">
+            <div>
                 <h3 class="label-grand">Adresse de Facturation (si différente de celle de livraison)</h3>
 
                 <input class="input-form" type="text" name="num_et_rue_fact"><br>
@@ -202,26 +201,28 @@ if(TRUE === isset($_POST['submit'])){
                 </div>
             </div>
             <div class="cgu-cgv">
-                <input type="checkbox" name="cgu_cgv" required>
+                <input type="checkbox" name="cgu_cgv" class="cgu_cgv" required>
                 <label>En cochant cette vous reconnaissez avec pris connaissance des <a href="#"> Conditions Générales d’Utilisation</a> et <a href="#"> Conditions Générales de Ventes</a> *</label>
             </div>
             <p style="font-family: 'Montserrat';">*= Mention obligatiore</p>
             <div class="conteneur-valider">
-                <input class="btnOrange" type="submit" name="submit" onclick="popup()" value="Valider">
+                <input class="btnOrange" type="button"  onclick="popup()" value="Valider">
             </div>
-        </form>
-        <div class="popup" id="popup">
-            <div class="popup-back"></div>
-            <div class="popup-container">
-                <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
-                <h2>Merci de votre commande !</h2>
-                <p>Nous vous remercions de votre commande ! <br>
-                Vous serez tenu au courant de l'état d'avancement de votre commande et de sa livraison. <br>
-                En attendant n'oubliez pas !</p>
-                <h3>Pas besoin d'aller loin pour manger bien !</h3>
-                <br>
-                <input type="button" class="btnOrange" onclick="document.location.href='index.php';" value="Retour au site"></input>
+        
+            <div class="popup" id="popup">
+                <div class="popup-back"></div>
+                <div class="popup-container">
+                    <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
+                    <h2>Merci de votre commande !</h2>
+                    <p>Nous vous remercions de votre commande ! <br>
+                    Vous serez tenu au courant de l'état d'avancement de votre commande et de sa livraison. <br>
+                    En attendant n'oubliez pas !</p>
+                    <h3>Pas besoin d'aller loin pour manger bien !</h3>
+                    <br>
+                    <input type="submit" name="submit" class="btnOrange" value="Retour au site"></input>
+                </div>
             </div>
-        </div>
+    </form>
 </body>
+<?php //var_dump($_SESSION);?>
 </html>
