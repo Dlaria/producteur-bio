@@ -53,7 +53,7 @@ Nous    appliquons des frais de port fixe de 4€ pour la livraison, frais de po
                             <?php echo $produit->Origine; ?>
                             <p class="price"><?php echo number_format($produit->Prix,2,',',''); ?> </p>
                         </div>
-                        <a class="add" href="../form.php?id=<?php echo $produit->id; ?>">
+                        <a class="add" href="./form.php?id=<?php echo $produit->id; ?>">
                         add</a>
                 </div>
             <?php endforeach ?>
