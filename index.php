@@ -26,7 +26,7 @@
             C’est pourquoi nous avons décidé de rendre tout cela possible, vous pourrez directement filtrer sur votre région pour voir tous les produits fabriqués proche de chez vous avec en prime la photo du producteur qui vous permettra de mettre un visage derrière tout ce travail.
         </p>
         <img src="/producteur-bio/images_site/entreprise.jpg">
-        <h2>NOS PRUDUITS</h2>
+        <h2>NOS PRODUITS</h2>
         <p>Sélectionnez les quantités que vous souhaitez précommander et cliquez sur “Je précommande” pour valider.
 <br><br>
 Nous    effectuons la livraison à domicile pour le moment, la livraison en relais colis arrive bientôt ! 
@@ -53,7 +53,7 @@ Nous    appliquons des frais de port fixe de 4€ pour la livraison, frais de po
                             <?php echo $produit->Origine; ?>
                             <p class="price"><?php echo number_format($produit->Prix,2,',',''); ?> </p>
                         </div>
-                        <a class="add" href="../form.php?id=<?php echo $produit->id; ?>">
+                        <a class="add" href="./form.php?id=<?php echo $produit->id; ?>">
                         add</a>
                 </div>
             <?php endforeach ?>
