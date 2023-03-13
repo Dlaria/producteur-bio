@@ -1,6 +1,7 @@
 <?php 
     require 'db.class.php';
     $DB = new DB();
+    $panier = new panier($DB);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -11,8 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="script.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="./script.js"></script>
     <title>Mon producteur bio</title>
 </head>
 <body>
