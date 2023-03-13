@@ -87,6 +87,7 @@ div.produit{
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
+    
 }
 .produit img{
     width:70%;
@@ -114,7 +115,6 @@ div.produit{
     border:none;
     cursor:pointer;
 }
-
 /* Panier */
 .panier{
     border:1px solid black;

@@ -124,7 +124,7 @@ if(TRUE === isset($_POST['submit'])){
                 <p><?php echo $produit->Nom; ?></p></td>
                 <td class="quantité"><input type="number" name="panier[quantite][<?php echo $produit->id; ?>]" value="<?php echo $_SESSION['panier'][$produit->id];?>"></td>
                  <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
-                <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet"><button >enlever</button></a></td>
+                <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet">retirer</a></td>
             </tr>
             <?php endforeach; ?>
         </table>
