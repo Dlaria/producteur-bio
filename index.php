@@ -58,13 +58,10 @@
                     <p>Origine : <br><?php echo $produit->Origine; ?></p>
                 </div>
                 <p class="price"><?php echo number_format($produit->Prix,2,',',''); ?> €</p>
-                <!-- <a class="add" href="./form.php?id=<?php //echo $produit->id; ?>">add</a> -->
-                <button onclick="plus(<?php echo $produit->id; ?>)" class="plus"><img src="./images_site/plus.png" alt=""></button>
-                <input type="number" id="quantite-<?php echo $produit->id; ?>" value="0">
-                <button onclick="moins(<?php echo $produit->id; ?>)" class="moins"><img src="./images_site/moins.png" alt=""></button>
-            </div>
+                <a class="add" href="./form.php?id=<?php echo $produit->id; ?>">add</a>
+                </div>
             <?php endforeach ?>
-            <button class="btnOrange">Valider</button>
+           
 <footer>
     <div class="logo">
     <img src="/producteur-bio/images_site/logo_1.png">

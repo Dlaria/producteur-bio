@@ -12,6 +12,8 @@ if(isset($_GET['id'])){
 if(isset($_GET['del'])){
     $panier->del($_GET['del']);
 }
+
+
 // Configuration de la connexion
 define('DB_HOST','localhost');
 define('DB_USER','root');
@@ -98,6 +100,7 @@ if(TRUE === isset($_POST['submit'])){
     <input type="button" name="retour" class="btnOrange" onclick="document.location.href='index.php';" value="Continuer mes achats">
     <h2 class="label-grand">Récapitulatif du panier</h2>
     <!-- Panier -->
+    <form method="post" action="form.php">
     <div class="panier">
         <table>
             <tr>
@@ -119,25 +122,20 @@ if(TRUE === isset($_POST['submit'])){
                 <td style="text-align:left;line-height:initial;">
                 <img src="<?php echo $produit->SrcImage; ?>" alt="<?php echo $produit->Nom; ?>">
                 <p><?php echo $produit->Nom; ?></p></td>
-                
-                
-                <button onclick="plus(<?php echo $produit->id; ?>)" class="plus"><img src="./images_site/plus.png" alt=""></button>
-
-                <td class="quantité"><input type="number" id="quantite-<?php echo $produit->id; ?>" value="<?php echo $_SESSION['panier'][$produit->id];?>"></td>
-
-                <button onclick="moins(<?php echo $produit->id; ?>)" class="moins"><img src="./images_site/moins.png" alt=""></button>
-
-                <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
+                <td class="quantité"><input type="number" name="panier[quantite][<?php echo $produit->id; ?>]" value="<?php echo $_SESSION['panier'][$produit->id];?>"></td>
+                 <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
                 <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a></td>
             </tr>
             <?php endforeach; ?>
         </table>
         <div class="footer-table">
             <p class="div-inline">Frais de port</p>
+            <input type="submit" value="recalculer">
             <span class="div-inline">4€</span>
             <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total(),2,',','');?>€</span></p>
         </div>
     </div>
+            </form>
     <!-- Début du formulaire -->
     <form action="form.php" method="post">
         <!-- Nom et prénom sont sur la même ligne -->

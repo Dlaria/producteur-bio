@@ -48,6 +48,16 @@ class panier{
             $_SESSION['panier']=array();
         }
         $this->DB = $DB;
+
+        
+        if(isset($_POST['panier']['quantite'])){
+            $this->recalc();
+        }
+    }
+
+    
+    public function recalc(){
+        $_SESSION['panier'] = $_POST['panier']['quantite'];
     }
 
     public function count(){
