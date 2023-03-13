@@ -10,3 +10,17 @@ let popup = () => {
     }
     }
 }
+
+
+
+
+let plus = (num) =>{
+    let quantite = document.getElementById('quantite-' + num);
+    quantite.value++
+}
+
+
+let moins = (num) =>{
+    let quantite = document.getElementById('quantite-' + num);
+    quantite.value--
+}
