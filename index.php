@@ -12,8 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <script src="./script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js" type="text/javascript"></script>
     <title>Mon producteur bio</title>
 </head>
 <body>
@@ -58,10 +58,13 @@
                     <p>Origine : <br><?php echo $produit->Origine; ?></p>
                 </div>
                 <p class="price"><?php echo number_format($produit->Prix,2,',',''); ?> €</p>
-                <a class="add" href="./form.php?id=<?php echo $produit->id; ?>">add</a>
+                <!-- <a class="add" href="./form.php?id=<?php //echo $produit->id; ?>">add</a> -->
+                <button onclick="plus(<?php echo $produit->id; ?>)" class="plus"><img src="./images_site/plus.png" alt=""></button>
+                <input type="number" id="quantite-<?php echo $produit->id; ?>" value="0">
+                <button onclick="moins(<?php echo $produit->id; ?>)" class="moins"><img src="./images_site/moins.png" alt=""></button>
             </div>
-    <?php endforeach ?>
-
+            <?php endforeach ?>
+            <button class="btnOrange">Valider</button>
 <footer>
     <div class="logo">
     <img src="/producteur-bio/images_site/logo_1.png">

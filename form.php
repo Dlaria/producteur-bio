@@ -119,7 +119,14 @@ if(TRUE === isset($_POST['submit'])){
                 <td style="text-align:left;line-height:initial;">
                 <img src="<?php echo $produit->SrcImage; ?>" alt="<?php echo $produit->Nom; ?>">
                 <p><?php echo $produit->Nom; ?></p></td>
-                <td class="quantité"><?php echo $_SESSION['panier'][$produit->id];?></td>
+                
+                
+                <button onclick="plus(<?php echo $produit->id; ?>)" class="plus"><img src="./images_site/plus.png" alt=""></button>
+
+                <td class="quantité"><input type="number" id="quantite-<?php echo $produit->id; ?>" value="<?php echo $_SESSION['panier'][$produit->id];?>"></td>
+
+                <button onclick="moins(<?php echo $produit->id; ?>)" class="moins"><img src="./images_site/moins.png" alt=""></button>
+
                 <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
                 <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a></td>
             </tr>
