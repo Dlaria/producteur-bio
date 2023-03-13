@@ -58,7 +58,7 @@
                     <p>Origine : <br><?php echo $produit->Origine; ?></p>
                 </div>
                 <p class="price"><?php echo number_format($produit->Prix,2,',',''); ?> €</p>
-                <a class="add" href="./form.php?id=<?php echo $produit->id; ?>">add</a>
+                <a class="add" href="./form.php?id=<?php echo $produit->id; ?>"><button class="btnOrange">ajouter</button></a>
                 </div>
             <?php endforeach ?>
            

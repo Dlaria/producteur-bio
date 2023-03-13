@@ -124,13 +124,13 @@ if(TRUE === isset($_POST['submit'])){
                 <p><?php echo $produit->Nom; ?></p></td>
                 <td class="quantité"><input type="number" name="panier[quantite][<?php echo $produit->id; ?>]" value="<?php echo $_SESSION['panier'][$produit->id];?>"></td>
                  <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
-                <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet">delet</a></td>
+                <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet"><button >enlever</button></a></td>
             </tr>
             <?php endforeach; ?>
         </table>
         <div class="footer-table">
             <p class="div-inline">Frais de port</p>
-            <input type="submit" value="recalculer">
+            <input class="btnOrange" type="submit" value="recalculer">
             <span class="div-inline">4€</span>
             <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total(),2,',','');?>€</span></p>
         </div>
