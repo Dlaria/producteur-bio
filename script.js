@@ -14,13 +14,16 @@ let popup = () => {
 
 
 
-let plus = (num) =>{
+let plus = (num,event) =>{
     let quantite = document.getElementById('quantite-' + num);
     quantite.value++
+    event.preventDefault();
 }
 
 
-let moins = (num) =>{
+let moins = (num,event) =>{
     let quantite = document.getElementById('quantite-' + num);
     quantite.value--
+    event.preventDefault();
+    
 }

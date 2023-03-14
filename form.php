@@ -1,35 +1,13 @@
 <?php
-require 'db.class.php';
-$DB = new DB();
-$panier = new panier($DB);
-if(isset($_GET['id'])){
-    $produit =$DB->query('SELECT id FROM produit WHERE id=:id', array('id'=> $_GET['id']));
-    if(empty($produit)){
-        die("essaye pas de me hack");
-    }
-    $panier ->add($produit[0]->id);
-}
-if(isset($_GET['del'])){
-    $panier->del($_GET['del']);
-}
+include('config.php');
+session_start();
 
+var_dump($_SESSION);
 
-// Configuration de la connexion
-define('DB_HOST','localhost');
-define('DB_USER','root');
-define('DB_PASS','root');
-define('DB_NAME','prodbio');
+$query = $dbh->prepare("SELECT * FROM produit");
+    $query->execute();
 
-try
-{
-    // Connexion � la base
-    $dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASS);
-}
-catch (PDOException $e)
-{
-	// Echec de la connexion
-    exit("Error: " . $e->getMessage());
-}
+    $result = $query->fetchAll(PDO::FETCH_OBJ);
 
 if(TRUE === isset($_POST['submit'])){
     // Identification de TOUT les éléments
@@ -110,29 +88,22 @@ if(TRUE === isset($_POST['submit'])){
             </tr>
         
             <?php
-            $ids=array_keys($_SESSION['panier']);
-            if(empty($ids)){
-                $produits = array();
-            }else{
-            $produits =$DB->query('SELECT * FROM produit WHERE  id IN('.implode(',',$ids).')');
-            }
-            foreach ($produits as $produit):
+            foreach ($result as $produit){
+                if ($_SESSION['quantite'.$produit->id] > 0){
                 ?>
-            <tr class="row">
+            <tr>
                 <td style="text-align:left;line-height:initial;">
-                <img src="<?php echo $produit->SrcImage; ?>" alt="<?php echo $produit->Nom; ?>">
-                <p><?php echo $produit->Nom; ?></p></td>
-                <td class="quantité"><input type="number" name="panier[quantite][<?php echo $produit->id; ?>]" value="<?php echo $_SESSION['panier'][$produit->id];?>"></td>
-                 <td class="prix"> <?php echo number_format($produit->Prix,2,',',''); ?></td>
-                <td>&emsp;&emsp;<a href="form.php?del=<?php echo $produit->id; ?>" class="delet"><button >enlever</button></a></td>
+                <img src="<?= $produit->SrcImage; ?>" alt="<?= $produit->Nom; ?>">
+                <p><?= $produit->Nom; ?></p></td>
+                <td class="quantité"><input type="number" value="<?= $_SESSION['quantite'.$produit->id];?>"></td>
+                 <td class="prix"> <?= number_format($produit->Prix,2,',',''); ?></td>
             </tr>
-            <?php endforeach; ?>
+            <?php } }?>
         </table>
         <div class="footer-table">
             <p class="div-inline">Frais de port</p>
-            <input class="btnOrange" type="submit" value="recalculer">
             <span class="div-inline">4€</span>
-            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?php echo number_format($panier->total(),2,',','');?>€</span></p>
+            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total">€</span></p>
         </div>
     </div>
             </form>
