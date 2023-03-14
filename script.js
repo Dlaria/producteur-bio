@@ -17,16 +17,19 @@ let popup = () => {
 let plus = (produitId,event) =>{
     let quantite = document.getElementById('quantite-' + produitId);
     quantite.value++
-    opacityBtn(produitId, event);
     event.preventDefault();
+    opacityBtn(produitId, event);
 }
 
 
 let moins = (produitId,event) =>{
     let quantite = document.getElementById('quantite-' + produitId);
     quantite.value--
-    opacityBtn(produitId, event)
+    if (+quantite.value < +quantite.min){
+        quantite.value = quantite.min;
+    }
     event.preventDefault();
+    opacityBtn(produitId, event)
 
 }
 
@@ -35,9 +38,6 @@ let opacityBtn = (produitId, event) =>{
     let btnIndex = document.getElementById('btnIndex');
     console.log(btnIndex);
     console.log(quantite.value);
-    if (+quantite.value < +quantite.min){
-        quantite.value = quantite.min;
-    }
     if (+quantite.value == 0){
         btnIndex.setAttribute('disabled',false);
     }else{

@@ -189,7 +189,15 @@ tr td p {
     left:0;
 }
 
-
+.pageForm .quantite{
+    width:20%;
+    text-align: center;
+}
+.pageForm .btnQuantite{
+    width:10%;
+    position:relative;
+    top:10px;
+}
 /* Formulaire */
 .conteneur-inline{width:80%;}
 

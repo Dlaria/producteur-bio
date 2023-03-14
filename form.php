@@ -8,6 +8,7 @@ $query = $dbh->prepare("SELECT * FROM produit");
     $query->execute();
 
     $result = $query->fetchAll(PDO::FETCH_OBJ);
+    $Total = 0;
 
 if(TRUE === isset($_POST['submit'])){
     // Identification de TOUT les éléments
@@ -63,7 +64,7 @@ if(TRUE === isset($_POST['submit'])){
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="http://localhost/producteur-bio/style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="script.js"></script>
     <title>Mon producteur bio | formulaire de précommande</title>
 </head>
@@ -78,37 +79,48 @@ if(TRUE === isset($_POST['submit'])){
     <input type="button" name="retour" class="btnOrange" onclick="document.location.href='index.php';" value="Continuer mes achats">
     <h2 class="label-grand">Récapitulatif du panier</h2>
     <!-- Panier -->
-    <form method="post" action="form.php">
-    <div class="panier">
-        <table>
-            <tr>
-                <th>Produits</th>
-                <th>Quantité</th>
-                <th>Prix</th>
-            </tr>
-        
-            <?php
-            foreach ($result as $produit){
-                if ($_SESSION['quantite'.$produit->id] > 0){
+    <form method="post" action="form.php" class="pageForm">
+        <div class="panier">
+            <table>
+                <tr>
+                    <th>Produits</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                </tr>
+            
+                <?php
+                    foreach ($result as $produit):
+                        if ($_SESSION['quantite'.$produit->id] > 0){
                 ?>
-            <tr>
-                <td style="text-align:left;line-height:initial;">
-                <img src="<?= $produit->SrcImage; ?>" alt="<?= $produit->Nom; ?>">
-                <p><?= $produit->Nom; ?></p></td>
-                <td class="quantité"><input type="number" value="<?= $_SESSION['quantite'.$produit->id];?>"></td>
-                 <td class="prix"> <?= number_format($produit->Prix,2,',',''); ?></td>
-            </tr>
-            <?php } }?>
-        </table>
-        <div class="footer-table">
-            <p class="div-inline">Frais de port</p>
-            <span class="div-inline">4€</span>
-            <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total">€</span></p>
+                            <tr>
+                                <td style="text-align:left;line-height:initial;">
+                                    <img src="<?= $produit->SrcImage; ?>" alt="<?= $produit->Nom; ?>">
+                                    <p><?= $produit->Nom; ?></p>
+                                </td>
+                                <td class="quantité">
+                                    <input class="btnQuantite" type="image" onclick="plus(<?= $produit->id;?>,event)" src="./images_site/plus.png" alt="bouton-plus">
+
+                                    <input class="quantite" id="quantite-<?= $produit->id;?>" oninput="opacityBtn(<?= $produit->id;?>, event)" name="quantite-<?= $produit->id;?>" value="<?= $_SESSION['quantite'.$produit->id]?>" min="0"type="number">
+
+                                    <input class="btnQuantite" type="image" onclick="moins(<?= $produit->id;?>,event)" src="./images_site/moins.png" alt="bouton-moins">
+                                </td>
+                                <td class="prix"> <?= number_format($produit->Prix,2,',',''); ?></td>
+                            </tr>
+                <?php
+                        }
+                        $Total += $produit->Prix * $_SESSION['quantite'.$produit->id];
+                    endforeach;
+                ?>
+            </table>
+            <div class="footer-table">
+                <p class="div-inline">Frais de port</p>
+                <span class="div-inline">4€</span>
+                <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?= number_format($Total,2,',','') ?>€</span></p>
+            </div>
         </div>
-    </div>
-            </form>
+    
     <!-- Début du formulaire -->
-    <form action="form.php" method="post">
+    
         <!-- Nom et prénom sont sur la même ligne -->
         <div class="conteneur-inline">
             <div class="div-inline">
