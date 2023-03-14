@@ -68,7 +68,7 @@
 
                 <input class="btnQuantite" type="image" onclick="plus(<?= $produit->id;?>,event)" src="./images_site/plus.png" alt="bouton-plus">
 
-                <input class="quantite" id="quantite-<?= $produit->id;?>" name="quantite-<?= $produit->id;?>" value="0" type="number">
+                <input class="quantite" id="quantite-<?= $produit->id;?>" oninput="opacityBtn(<?= $produit->id;?>, event)" name="quantite-<?= $produit->id;?>" value="0" min="0"type="number">
 
                 <input class="btnQuantite" type="image" onclick="moins(<?= $produit->id;?>,event)" src="./images_site/moins.png" alt="bouton-moins">
 
@@ -81,7 +81,7 @@
             $_SESSION['quantite'.$produit->id] = (int) $_POST['quantite-'.$produit->id];
             }
             ?>
-            <input class="btnOrange btnIndex" type="submit" name="valider" value="Valider">
+            <input class="btnOrange" id="btnIndex" type="submit" name="valider" value="Valider" disabled>
             </form>
             <?php if (TRUE === isset($_POST['valider'])){
                     echo "<script>document.location.href='form.php';</script>";

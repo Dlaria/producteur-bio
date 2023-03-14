@@ -119,7 +119,7 @@ div.produit{
     width:15%;
     margin:10px;
 }
-form .btnIndex{
+form #btnIndex{
     margin: 15px auto;
 }
 
