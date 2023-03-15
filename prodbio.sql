@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 06 mars 2023 à 08:49
+-- Généré le : mer. 15 mars 2023 à 10:10
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `prodbio`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `panieruser`
+--
+
+DROP TABLE IF EXISTS `panieruser`;
+CREATE TABLE IF NOT EXISTS `panieruser` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `Email` varchar(255) NOT NULL,
+  `quantiteProduit1` int NOT NULL,
+  `quantiteProduit2` int NOT NULL,
+  `quantiteProduit3` int NOT NULL,
+  `quantiteProduit4` int NOT NULL,
+  `quantiteProduit5` int NOT NULL,
+  `fraisDePort` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -70,14 +89,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `CodePostalFact` int NOT NULL,
   `VilleFact` varchar(255) CHARACTER SET utf32 COLLATE utf32_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf32;
-
---
--- Déchargement des données de la table `user`
---
-
-INSERT INTO `user` (`id`, `Nom`, `Prénom`, `Email`, `NumEtRue`, `ComplementAdresse`, `CodePostal`, `Ville`, `NumMobile`, `NumEtRueFact`, `ComplementAdresseFact`, `CodePostalFact`, `VilleFact`) VALUES
-(1, 'Briard', 'Airald', 'airald.73@orange.fr', '50 rue des chevillards', 'les mésange', 73250, 'St Pierre D\'Albigny', 650023762, '50 rue des chevillards', 'les mésange', 73250, 'St Pierre D\'Albigny');
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
