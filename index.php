@@ -1,12 +1,6 @@
 <?php 
     include('config.php');
     session_start();
-    
-
-    $query = $dbh->prepare("SELECT * FROM produit");
-    $query->execute();
-
-    $result = $query->fetchAll(PDO::FETCH_OBJ);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -53,11 +47,14 @@
         </p>
     </div>
     <form class="formindex" action="index.php" method="post">
+            <!-- Boucle pour récupérer les infos produit -->
         <?php foreach($result as $produit){
+            // Nettoyage de la quantité stocker dans le tableau de session
             if (isset($_SESSION['quantite'.$produit->id]) && $_SESSION['quantite'.$produit->id] != ''){
                 $_SESSION['quantite'.$produit->id] = '';
             }
             ?>
+            <!-- Création du produit -->
             <div class="produit" id="produit-<?= $produit->id;?>">
                 <img src="<?= $produit->SrcImage;?>" alt="<?= $produit->Nom;?>">
                 <div class="description">

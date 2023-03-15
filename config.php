@@ -15,4 +15,9 @@ catch (PDOException $e)
 	// Echec de la connexion
     exit("Error: " . $e->getMessage());
 }
+// Séléction de tous les produits dans la table produit
+$query = $dbh->prepare("SELECT * FROM produit");
+$query->execute();
+// On stock le résultat
+$result = $query->fetchAll(PDO::FETCH_OBJ);
 ?>

@@ -2,15 +2,12 @@
 include('config.php');
 session_start();
 
-$query = $dbh->prepare("SELECT * FROM produit");
-    $query->execute();
+$fraisDePort = '4€';
+$Total = 0;
 
-    $result = $query->fetchAll(PDO::FETCH_OBJ);
-    $fraisDePort = '4€';
-    $Total = 0;
-
+// Envoie des champs du formulaire à la table user
 if(TRUE === isset($_POST['submit'])){
-    // Identification de TOUT les éléments
+    // Identification de TOUT les éléments dans le formulaire
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
         $mail = $_POST['mail'];
@@ -27,34 +24,28 @@ if(TRUE === isset($_POST['submit'])){
         $sql = "INSERT INTO user (Nom, Prénom, Email, NumEtRue, ComplementAdresse, CodePostal, Ville, NumMobile, NumEtRueFact, ComplementAdresseFact, CodePostalFact, VilleFact)
         VALUE (:nom, :prenom, :mail, :num_et_rue, :comp_adresse, :code_postal, :ville, :numero_tel, :num_et_rue_fact, :comp_adresse_fact, :code_postal_fact, :ville_fact)";
         $query = $dbh->prepare($sql);
-        $query->bindParam(':nom',$nom,PDO::PARAM_STR);
-        $query->bindParam(':prenom',$prenom,PDO::PARAM_STR);
-        $query->bindParam(':mail',$mail,PDO::PARAM_STR);
-        $query->bindParam(':num_et_rue',$num_et_rue,PDO::PARAM_STR);
-        $query->bindParam(':comp_adresse',$comp_adresse,PDO::PARAM_STR);
-        $query->bindParam(':code_postal',$code_postal,PDO::PARAM_STR);
-        $query->bindParam(':ville',$ville,PDO::PARAM_STR);
-        $query->bindParam(':numero_tel',$numero_tel,PDO::PARAM_STR);
+            $query->bindParam(':nom',$nom,PDO::PARAM_STR);
+            $query->bindParam(':prenom',$prenom,PDO::PARAM_STR);
+            $query->bindParam(':mail',$mail,PDO::PARAM_STR);
+            $query->bindParam(':num_et_rue',$num_et_rue,PDO::PARAM_STR);
+            $query->bindParam(':comp_adresse',$comp_adresse,PDO::PARAM_STR);
+            $query->bindParam(':code_postal',$code_postal,PDO::PARAM_STR);
+            $query->bindParam(':ville',$ville,PDO::PARAM_STR);
+            $query->bindParam(':numero_tel',$numero_tel,PDO::PARAM_STR);
 
-        // Si il y a rien d'écrit dans les champs de facturation alors on execute avec les champs de livraison
-        if(strlen($num_et_rue_fact) == 0 && strlen($comp_adresse_fact) == 0 &&  strlen($code_postal_fact) ==  0 && strlen($ville_fact) == 0){
-            $query->bindParam(':num_et_rue_fact',$num_et_rue,PDO::PARAM_STR);
-            $query->bindParam(':comp_adresse_fact',$comp_adresse,PDO::PARAM_STR);
-            $query->bindParam(':code_postal_fact',$code_postal,PDO::PARAM_STR);
-            $query->bindParam(':ville_fact',$ville,PDO::PARAM_STR);
-        }else{
-            $query->bindParam(':num_et_rue_fact',$num_et_rue_fact,PDO::PARAM_STR);
-            $query->bindParam(':comp_adresse_fact',$comp_adresse_fact,PDO::PARAM_STR);
-            $query->bindParam(':code_postal_fact',$code_postal_fact,PDO::PARAM_STR);
-            $query->bindParam(':ville_fact',$ville_fact,PDO::PARAM_STR);
-        }
+            // Si il y a rien d'écrit dans les champs de facturation alors on execute avec les champs de livraison
+            if(strlen($num_et_rue_fact) == 0 && strlen($comp_adresse_fact) == 0 &&  strlen($code_postal_fact) ==  0 && strlen($ville_fact) == 0){
+                $query->bindParam(':num_et_rue_fact',$num_et_rue,PDO::PARAM_STR);
+                $query->bindParam(':comp_adresse_fact',$comp_adresse,PDO::PARAM_STR);
+                $query->bindParam(':code_postal_fact',$code_postal,PDO::PARAM_STR);
+                $query->bindParam(':ville_fact',$ville,PDO::PARAM_STR);
+            }else{
+                $query->bindParam(':num_et_rue_fact',$num_et_rue_fact,PDO::PARAM_STR);
+                $query->bindParam(':comp_adresse_fact',$comp_adresse_fact,PDO::PARAM_STR);
+                $query->bindParam(':code_postal_fact',$code_postal_fact,PDO::PARAM_STR);
+                $query->bindParam(':ville_fact',$ville_fact,PDO::PARAM_STR);
+            }
         $query->execute();
-
-        
-       
-            
-
-        //header('location:index.php');
 }
 ?>
 
@@ -81,7 +72,8 @@ if(TRUE === isset($_POST['submit'])){
     
     <input type="button" name="retour" class="btnOrange" onclick="document.location.href='index.php';" value="Continuer mes achats">
     <h2 class="label-grand">Récapitulatif du panier</h2>
-    <!-- Panier -->
+
+    <!-- Début du panier -->
     <form method="post" action="form.php" class="pageForm">
         <div class="panier">
             <table>
@@ -92,9 +84,12 @@ if(TRUE === isset($_POST['submit'])){
                 </tr>
             
                 <?php
+                // Boucle pour récupérer les infos produit
                     foreach ($result as $produit){
+                        // Si la quantité du produit dans le tableau de session en fonction de son identifiant est supérieur à 0 
                         if ($_SESSION['quantite'.$produit->id] > 0){
                 ?>
+                            <!-- Création du produit dans le panier -->
                             <tr>
                                 <td style="text-align:left;line-height:initial;">
                                     <img src="<?= $produit->SrcImage; ?>" alt="<?= $produit->Nom; ?>">
@@ -104,7 +99,10 @@ if(TRUE === isset($_POST['submit'])){
                                 <td class="prix"> <?= number_format($produit->Prix,2,',',''); ?></td>
                             </tr>
                 <?php
+                        // Calcul du total
                         $Total += $produit->Prix * $_SESSION['quantite'.$produit->id];
+
+                        // Si il y a pas de quantité alors on retourne a l'index
                         }else if (!isset($_SESSION['quantite'.$produit->id])){
                             header('location:index.php');
                         }
@@ -127,6 +125,7 @@ if(TRUE === isset($_POST['submit'])){
             </div>
         </div>
         <?php 
+        // Envoie des quantité du panier à la table panieruser
         if(TRUE === isset($_POST['submit'])){
             $mail = $_POST['mail'];
             $quantite1 = $_SESSION['quantite1'];
@@ -145,6 +144,9 @@ if(TRUE === isset($_POST['submit'])){
                 $queryPanier->bindParam(':quantiteproduit5',$quantite5,PDO::PARAM_INT);
                 $queryPanier->bindParam(':fraisdeport',$fraisDePort,PDO::PARAM_STR);
             $queryPanier->execute();
+
+            // Après l'evoie on retourne à l'index
+            header('location:index.php');
         }
         ?>
     
@@ -224,7 +226,7 @@ if(TRUE === isset($_POST['submit'])){
             <div class="conteneur-valider">
                 <input class="btnOrange" type="button"  onclick="popup()" value="Valider">
             </div>
-        
+            <!-- La popup en display:none; apprait à l'appel de la fonction JS popup() -->
             <div class="popup" id="popup">
                 <div class="popup-back"></div>
                 <div class="popup-container">
@@ -235,6 +237,7 @@ if(TRUE === isset($_POST['submit'])){
                     En attendant n'oubliez pas !</p>
                     <h3>Pas besoin d'aller loin pour manger bien !</h3>
                     <br>
+                    <!-- La soumission du formulaire ce fait ici -->
                     <input type="submit" name="submit" class="btnOrange" value="Retour au site"></input>
                 </div>
             </div>
