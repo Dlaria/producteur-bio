@@ -50,7 +50,11 @@ if(TRUE === isset($_POST['submit'])){
         }
         $query->execute();
 
-        header('location:index.php');
+        
+       
+            
+
+        //header('location:index.php');
 }
 ?>
 
@@ -122,6 +126,27 @@ if(TRUE === isset($_POST['submit'])){
                 <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?= number_format($Total,2,',','');?>€</span></p>
             </div>
         </div>
+        <?php 
+        if(TRUE === isset($_POST['submit'])){
+            $mail = $_POST['mail'];
+            $quantite1 = $_SESSION['quantite1'];
+            $quantite2 = $_SESSION['quantite2'];
+            $quantite3 = $_SESSION['quantite3'];
+            $quantite4 = $_SESSION['quantite4'];
+            $quantite5 = $_SESSION['quantite5'];
+            $sqlPanier = "INSERT INTO panieruser (Email, quantiteProduit1, quantiteProduit2, quantiteProduit3, quantiteProduit4, quantiteProduit5, fraisDePort) 
+            VALUE (:mail, :quantiteproduit1, :quantiteproduit2, :quantiteproduit3, :quantiteproduit4, :quantiteproduit5, :fraisdeport)";
+            $queryPanier = $dbh->prepare($sqlPanier);
+                $queryPanier->bindParam(':mail',$mail,PDO::PARAM_STR);
+                $queryPanier->bindParam(':quantiteproduit1',$quantite1,PDO::PARAM_INT);
+                $queryPanier->bindParam(':quantiteproduit2',$quantite2,PDO::PARAM_INT);
+                $queryPanier->bindParam(':quantiteproduit3',$quantite3,PDO::PARAM_INT);
+                $queryPanier->bindParam(':quantiteproduit4',$quantite4,PDO::PARAM_INT);
+                $queryPanier->bindParam(':quantiteproduit5',$quantite5,PDO::PARAM_INT);
+                $queryPanier->bindParam(':fraisdeport',$fraisDePort,PDO::PARAM_STR);
+            $queryPanier->execute();
+        }
+        ?>
     
     <!-- Début du formulaire -->
         <!-- Nom et prénom sont sur la même ligne -->
