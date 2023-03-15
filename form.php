@@ -2,12 +2,11 @@
 include('config.php');
 session_start();
 
-var_dump($_SESSION);
-
 $query = $dbh->prepare("SELECT * FROM produit");
     $query->execute();
 
     $result = $query->fetchAll(PDO::FETCH_OBJ);
+    $fraisDePort = '4€';
     $Total = 0;
 
 if(TRUE === isset($_POST['submit'])){
@@ -70,10 +69,10 @@ if(TRUE === isset($_POST['submit'])){
 </head>
 <body style="margin:55px 105px;">
     <div class="conteneur-logo">
-    <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
+        <img class="logo" src="./images_site/logo_1.png" alt="logo-mon-producteur-bio">
     </div>
     <div class="conteneur-titre">
-    <h1 class="titre">Formulaire de précommande</h1>
+        <h1 class="titre">Formulaire de précommande</h1>
     </div>
     
     <input type="button" name="retour" class="btnOrange" onclick="document.location.href='index.php';" value="Continuer mes achats">
@@ -89,7 +88,7 @@ if(TRUE === isset($_POST['submit'])){
                 </tr>
             
                 <?php
-                    foreach ($result as $produit):
+                    foreach ($result as $produit){
                         if ($_SESSION['quantite'.$produit->id] > 0){
                 ?>
                             <tr>
@@ -97,30 +96,34 @@ if(TRUE === isset($_POST['submit'])){
                                     <img src="<?= $produit->SrcImage; ?>" alt="<?= $produit->Nom; ?>">
                                     <p><?= $produit->Nom; ?></p>
                                 </td>
-                                <td class="quantité">
-                                    <input class="btnQuantite" type="image" onclick="plus(<?= $produit->id;?>,event)" src="./images_site/plus.png" alt="bouton-plus">
-
-                                    <input class="quantite" id="quantite-<?= $produit->id;?>" oninput="opacityBtn(<?= $produit->id;?>, event)" name="quantite-<?= $produit->id;?>" value="<?= $_SESSION['quantite'.$produit->id]?>" min="0"type="number">
-
-                                    <input class="btnQuantite" type="image" onclick="moins(<?= $produit->id;?>,event)" src="./images_site/moins.png" alt="bouton-moins">
-                                </td>
+                                <td class="quantité"><?= $_SESSION['quantite'.$produit->id];?></td>
                                 <td class="prix"> <?= number_format($produit->Prix,2,',',''); ?></td>
                             </tr>
                 <?php
-                        }
                         $Total += $produit->Prix * $_SESSION['quantite'.$produit->id];
-                    endforeach;
+                        }else if (!isset($_SESSION['quantite'.$produit->id])){
+                            header('location:index.php');
+                        }
+                    }
                 ?>
             </table>
             <div class="footer-table">
                 <p class="div-inline">Frais de port</p>
-                <span class="div-inline">4€</span>
-                <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?= number_format($Total,2,',','') ?>€</span></p>
+                <span class="div-inline">
+                    <?php
+                        if ($Total >= 40){
+                            $fraisDePort = 'OFFERT'; 
+                            echo $fraisDePort;
+                        }else{
+                            echo $fraisDePort;
+                        }
+                    ?>
+                </span>
+                <p class="conteneur-total">Prix total  &emsp;&emsp;<span id="total"><?= number_format($Total,2,',','');?>€</span></p>
             </div>
         </div>
     
     <!-- Début du formulaire -->
-    
         <!-- Nom et prénom sont sur la même ligne -->
         <div class="conteneur-inline">
             <div class="div-inline">
