@@ -61,7 +61,18 @@
                     <p class="nom-produit"><?= $produit->Nom;?></p>
                     <p>Origine : <br><?= $produit->Origine;?></p>
                 </div>
-                <p class="price"><?= number_format($produit->Prix,2,',','');?> €</p>
+
+                <?php if ($produit->Poids2 != null){ ?>
+                    <select name="selectPoids<?= $produit->id ?>" id="selectPoids-<?= $produit->id ?>" oninput="prixChange(<?= $produit->id ?>, <?= $produit->Prix ?>,<?= $produit->Prix2 ?>)">
+                        <option value="poids" name="poids"><?= $produit->Poids ?></option>
+                        <option value="poids2"><?= $produit->Poids2 ?></option>
+                    </select><br>
+                <?php }else{ ?>
+                    <span><?= $produit->Poids ?></span><br>
+                <?php } ?>
+
+                <span class="price" name="prix-<?= $produit->id ?>" id="prix-<?= $produit->id ?>"><?= number_format($produit->Prix,2,',','');?> €</span><br>
+
 
                 <input class="btnQuantite" type="image" onclick="plus(<?= $produit->id;?>,event)" src="./images_site/plus.png" alt="bouton-plus">
 
@@ -72,17 +83,35 @@
             </div>
             
             <?php
-            if (!isset($_POST['quantite-'.$produit->id])){
-                $_POST['quantite-'.$produit->id] = 0;
-            }
-            $_SESSION['quantite'.$produit->id] = (int) $_POST['quantite-'.$produit->id];
             }
             ?>
             <input class="btnOrange" id="btnIndex" type="submit" name="valider" value="Valider" disabled>
             </form>
             <?php if (TRUE === isset($_POST['valider'])){
-                    echo "<script>document.location.href='form.php';</script>";
-            } ?>
+                foreach($result as $produit){
+                    $_SESSION['quantite'.$produit->id] = (int) $_POST['quantite-'.$produit->id];
+                    if (isset($_POST['selectPoids'.$produit->id])){
+
+                        switch($_POST['selectPoids'.$produit->id]){
+                            case 'poids':
+                                $_SESSION['poids'.$produit->id] = $produit->Poids;
+                                $_SESSION['prix'.$produit->id] = $produit->Prix;
+                                break;
+                            case 'poids2':
+                                $_SESSION['poids'.$produit->id] = $produit->Poids2;
+                                $_SESSION['prix'.$produit->id] = $produit->Prix2;
+                                break;
+                            default:
+                                $produit->Poids;
+                                $produit->Prix;
+                                break;
+                        }
+                    }
+                }
+                // var_dump($_POST);
+                // var_dump($_SESSION);
+                echo "<script>document.location.href='form.php';</script>";
+            }?>
 <footer>
     <div class="logo">
     <img src="/producteur-bio/images_site/logo_1.png">

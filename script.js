@@ -44,3 +44,19 @@ let opacityBtn = (produitId, event) =>{
         btnIndex.removeAttribute('disabled',true);
     }
 }
+
+let prixChange = (produitId, prix1, prix2) =>{
+    let selectPoids = document.getElementById('selectPoids-' + produitId);
+    let prix = document.getElementById('prix-' + produitId);
+    switch (selectPoids.value){
+        case "poids":
+            prix.innerText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(prix1) ;
+            break;
+        case "poids2":
+            prix.innerText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(prix2);
+            break;
+        default:
+            prix.innerText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(prix1) ;
+            break;
+        }
+}

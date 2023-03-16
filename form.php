@@ -1,9 +1,13 @@
 <?php
 include('config.php');
 session_start();
+//var_dump($_SESSION);
+
 
 $fraisDePort = '4€';
 $Total = 0;
+
+
 
 // Envoie des champs du formulaire à la table user
 if(TRUE === isset($_POST['submit'])){
@@ -94,13 +98,32 @@ if(TRUE === isset($_POST['submit'])){
                                 <td style="text-align:left;line-height:initial;">
                                     <img src="<?= $produit->SrcImage; ?>" alt="<?= $produit->Nom; ?>">
                                     <p><?= $produit->Nom; ?></p>
+                                    <p><?php
+                                        if(isset($_SESSION['poids'.$produit->id])){
+                                            $poids = $_SESSION['poids'.$produit->id];
+                                            echo '('.$poids.')';
+                                        }else{
+                                            $poids = $produit->Poids;
+                                            echo '('.$poids.')';
+                                        }
+                                        ?></p>
                                 </td>
                                 <td class="quantité"><?= $_SESSION['quantite'.$produit->id];?></td>
-                                <td class="prix"> <?= number_format($produit->Prix,2,',',''); ?></td>
+                                <td class="prix">
+                                    <?php
+                                        if (isset($_SESSION['prix'.$produit->id])){
+                                            $prix = $_SESSION['prix'.$produit->id];
+                                            echo number_format($prix,2,',','');
+                                        }else{
+                                            $prix = $produit->Prix;
+                                            echo number_format($prix,2,',','');
+                                        }
+                                     ?>
+                                </td>
                             </tr>
                 <?php
                         // Calcul du total
-                        $Total += $produit->Prix * $_SESSION['quantite'.$produit->id];
+                        $Total += $prix * $_SESSION['quantite'.$produit->id];
 
                         // Si il y a pas de quantité alors on retourne a l'index
                         }else if (!isset($_SESSION['quantite'.$produit->id])){
@@ -129,24 +152,34 @@ if(TRUE === isset($_POST['submit'])){
         if(TRUE === isset($_POST['submit'])){
             $mail = $_POST['mail'];
             $quantite1 = $_SESSION['quantite1'];
+            $poids1 = $_SESSION['poids1'];
             $quantite2 = $_SESSION['quantite2'];
+            $poids2 = '350 g';
             $quantite3 = $_SESSION['quantite3'];
+            $poids3 = $_SESSION['poids3'];
             $quantite4 = $_SESSION['quantite4'];
+            $poids4 = $_SESSION['poids4'];
             $quantite5 = $_SESSION['quantite5'];
-            $sqlPanier = "INSERT INTO panieruser (Email, quantiteProduit1, quantiteProduit2, quantiteProduit3, quantiteProduit4, quantiteProduit5, fraisDePort) 
-            VALUE (:mail, :quantiteproduit1, :quantiteproduit2, :quantiteproduit3, :quantiteproduit4, :quantiteproduit5, :fraisdeport)";
+            $poids5 = $_SESSION['poids5'];
+            $sqlPanier = "INSERT INTO panieruser (Email, quantiteProduit1, poidsProduit1, quantiteProduit2, poidsProduit2, quantiteProduit3, poidsProduit3, quantiteProduit4, poidsProduit4, quantiteProduit5, poidsProduit5, fraisDePort) 
+            VALUE (:mail, :quantiteproduit1, :poidsProduit1, :quantiteproduit2, :poidsProduit2, :quantiteproduit3, :poidsProduit3, :quantiteproduit4, :poidsProduit4, :quantiteproduit5, :poidsProduit5, :fraisdeport)";
             $queryPanier = $dbh->prepare($sqlPanier);
                 $queryPanier->bindParam(':mail',$mail,PDO::PARAM_STR);
                 $queryPanier->bindParam(':quantiteproduit1',$quantite1,PDO::PARAM_INT);
+                $queryPanier->bindParam(':poidsProduit1',$poids1,PDO::PARAM_STR);
                 $queryPanier->bindParam(':quantiteproduit2',$quantite2,PDO::PARAM_INT);
+                $queryPanier->bindParam(':poidsProduit2',$poids2,PDO::PARAM_STR);
                 $queryPanier->bindParam(':quantiteproduit3',$quantite3,PDO::PARAM_INT);
+                $queryPanier->bindParam(':poidsProduit3',$poids3,PDO::PARAM_STR);
                 $queryPanier->bindParam(':quantiteproduit4',$quantite4,PDO::PARAM_INT);
+                $queryPanier->bindParam(':poidsProduit4',$poids4,PDO::PARAM_STR);
                 $queryPanier->bindParam(':quantiteproduit5',$quantite5,PDO::PARAM_INT);
+                $queryPanier->bindParam(':poidsProduit5',$poids5,PDO::PARAM_STR);
                 $queryPanier->bindParam(':fraisdeport',$fraisDePort,PDO::PARAM_STR);
             $queryPanier->execute();
 
             // Après l'evoie on retourne à l'index
-            header('location:index.php');
+            echo "<script>document.location.href='index.php';</script>";
         }
         ?>
     
