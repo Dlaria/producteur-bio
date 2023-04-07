@@ -33,12 +33,12 @@ let moins = (produitId,event) =>{
 
 }
 
-let opacityBtn = (produitId, event) =>{
+let opacityBtn = (produitId) =>{
     let quantite = document.getElementById('quantite-' + produitId);
     let btnIndex = document.getElementById('btnIndex');
     console.log(btnIndex);
     console.log(quantite.value);
-    if (+quantite.value == 0){
+    if (+quantite.value <= 0){
         btnIndex.setAttribute('disabled',false);
     }else{
         btnIndex.removeAttribute('disabled',true);

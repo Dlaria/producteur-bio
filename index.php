@@ -1,6 +1,11 @@
 <?php 
     include('config.php');
     session_start();
+    // Nettoyage du tableau de session
+    if (isset($_SESSION) && $_SESSION != ''){
+        $_SESSION = NULL;
+    }
+    //var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,16 +30,17 @@
         </div>
     </header>
 
-        <img class="annonce" src="/producteur-bio/images_site/annonce_ouverture.png" alt="annonce_ouverture">
+        <img class="annonce" src="./images_site/annonce_ouverture.png" alt="annonce_ouverture">
     
     <div class="présentation">
         <h2>NOTRE MISSION</h2>
-        <p>Chez Mon Producteur Bio nous mettons en avant le circuit court. Nous avons remarqué que sur la majorité des sites de vente de produits bio en ligne il était difficile de savoir quel produits était fait proche de chez nous et par qui. 
-        <br><br>
+        <p>
+            Chez Mon Producteur Bio nous mettons en avant le circuit court. Nous avons remarqué que sur la majorité des sites de vente de produits bio en ligne il était difficile de savoir quel produits était fait proche de chez nous et par qui. 
+            <br><br>
             C’est pourquoi nous avons décidé de rendre tout cela possible, vous pourrez directement filtrer sur votre région pour voir tous les produits fabriqués proche de chez vous avec en prime la photo du producteur qui vous permettra de mettre un visage derrière tout ce travail.
         </p>
         <div class="feuilles"></div>
-        <img class="imgPrésentation" src="/producteur-bio/images_site/entreprise.jpg">
+        <img class="imgPrésentation" src="./images_site/entreprise.jpg">
     </div>
     <div class="présentation-produit">
         <h2>NOS PRODUITS</h2>
@@ -48,12 +54,8 @@
     </div>
     <form class="formindex" action="index.php" method="post">
             <!-- Boucle pour récupérer les infos produit -->
-        <?php foreach($result as $produit){
-            // Nettoyage de la quantité stocker dans le tableau de session
-            if (isset($_SESSION['quantite'.$produit->id]) && $_SESSION['quantite'.$produit->id] != ''){
-                $_SESSION['quantite'.$produit->id] = '';
-            }
-            ?>
+        <?php foreach($result as $produit){?>
+
             <!-- Création du produit -->
             <div class="produit" id="produit-<?= $produit->id;?>">
                 <img src="<?= $produit->SrcImage;?>" alt="<?= $produit->Nom;?>">
@@ -72,24 +74,17 @@
                 <?php } ?>
 
                 <span class="price" name="prix-<?= $produit->id ?>" id="prix-<?= $produit->id ?>"><?= number_format($produit->Prix,2,',','');?> €</span><br>
-
-
                 <input class="btnQuantite" type="image" onclick="plus(<?= $produit->id;?>,event)" src="./images_site/plus.png" alt="bouton-plus">
-
-                <input class="quantite" id="quantite-<?= $produit->id;?>" oninput="opacityBtn(<?= $produit->id;?>, event)" name="quantite-<?= $produit->id;?>" value="0" min="0"type="number">
-
+                <input class="quantite" id="quantite-<?= $produit->id;?>" oninput="opacityBtn(<?= $produit->id;?>)" name="quantite-<?= $produit->id;?>" value="0" min="0"type="number">
                 <input class="btnQuantite" type="image" onclick="moins(<?= $produit->id;?>,event)" src="./images_site/moins.png" alt="bouton-moins">
-
             </div>
-            
-            <?php
-            }
-            ?>
+            <?php } ?>
             <input class="btnOrange" id="btnIndex" type="submit" name="valider" value="Valider" disabled>
-            </form>
+        </form>
             <?php if (TRUE === isset($_POST['valider'])){
                 foreach($result as $produit){
                     $_SESSION['quantite'.$produit->id] = (int) $_POST['quantite-'.$produit->id];
+
                     if (isset($_POST['selectPoids'.$produit->id])){
 
                         switch($_POST['selectPoids'.$produit->id]){
@@ -108,8 +103,6 @@
                         }
                     }
                 }
-                // var_dump($_POST);
-                // var_dump($_SESSION);
                 echo "<script>document.location.href='form.php';</script>";
             }?>
 <footer>
@@ -137,9 +130,9 @@
     </div>
     <div class="reseaux">
         <h3>Nos réseaux sociaux</h3>
-        <img src="/producteur-bio/images_site/icon_facebook.png">
-        <img src="/producteur-bio/images_site/icon_instagram.png">
-        <img src="/producteur-bio/images_site/icon_youtube.png">
+        <a href="https://www.instagram.com/"><img src="/producteur-bio/images_site/icon_facebook.png" alt="Facebook"></a>
+        <a href="https://fr-fr.facebook.com/"><img src="/producteur-bio/images_site/icon_instagram.png" alt="Instagram"></a>
+        <a href="https://www.youtube.com/"><img src="/producteur-bio/images_site/icon_youtube.png" alt="Youtube"></a>
     </div>
 </footer>
 </body>
